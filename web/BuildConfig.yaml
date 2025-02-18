@@ -18,18 +18,15 @@ spec:
     type: Source
     sourceStrategy:
       from:
-        kind: ImageStreamTag
-        name: 'nginx:latest'
-        namespace: openshift
+        kind: DockerImage
+        name: 'docker.io/library/nginx:latest'
   postCommit: {}
   source:
     type: Git
     git:
       uri: "https://github.com/humensch/m210_buildconfig_site.git"
-    contextDir: /web
     sourceSecret:
       name: github-secret
-  
   triggers:
     - type: Generic
       generic:
