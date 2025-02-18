@@ -1,0 +1,28 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: website
+spec:
+  replicas: 1
+  selector:
+    app: website
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      containers:
+        - name: website
+          image: image-registry.openshift-image-registry.svc:5000/zlic-taltenburger1/website:latest
+          ports:
+            - containerPort: 8080
+  triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - website
+        from:
+          kind: ImageStreamTag
+          name: "website:latest"
+    - type: ConfigChange
