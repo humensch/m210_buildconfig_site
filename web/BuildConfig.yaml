@@ -2,6 +2,7 @@ kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
   name: html-openshift-app
+  namespace: zlic-taltenburger1
   labels:
     app: html-openshift-app
     app.kubernetes.io/part-of: html-openshift-app
@@ -18,13 +19,15 @@ spec:
     type: Source
     sourceStrategy:
       from:
-        kind: DockerImage
-        name: 'docker.io/library/nginx:latest'
+        kind: ImageStreamTag
+        name: 'nginx:latest'
+        namespace: openshift
   postCommit: {}
   source:
     type: Git
     git:
       uri: "https://github.com/humensch/m210_buildconfig_site.git"
+    contextDir: /web
     sourceSecret:
       name: github-secret
   triggers:
